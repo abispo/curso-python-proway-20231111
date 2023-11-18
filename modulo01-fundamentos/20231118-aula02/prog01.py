@@ -22,5 +22,6 @@ if __name__ == "__main__":
         case 3:
             print("Seu nível de acesso é de usuário.")
 
+        # Caso nenhuma das verificações anteriores resulte em True, chama o caso padrão
         case _:
             print("Nível de acesso desconhecido.")
