@@ -91,3 +91,25 @@ if __name__ == "__main__":
             break
 
         print('-'*50)
+
+    # Também podemos utilizar o continue dentro de um laço while
+
+    lista_valores = [1, 5, 5.2, 5.8, "Python", [2, 3], (1, 3, 7), {"nome": "José"}]
+
+    indice = 0
+    soma = 0
+
+    while indice < len(lista_valores):
+
+        if not isinstance(lista_valores[indice], int):
+            print("O valor não é um número inteiro")
+            indice += 1
+            continue
+
+        soma += lista_valores[indice]
+        indice += 1
+
+    else:
+        print("Todos os valores foram lidos")
+
+    print(f"Soma: {soma}")
