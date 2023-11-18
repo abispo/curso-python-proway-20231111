@@ -67,7 +67,7 @@ Sexo: F
 
 Nome: Vanessa
 Idade: 28
-Sexo: 7
+Sexo: F
 
 Quantidade de usuários do sexo masculino: 1
 Quantidade de usuários do sexo feminino: 2
