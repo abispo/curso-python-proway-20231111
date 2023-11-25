@@ -10,7 +10,6 @@ No Python, existe a possibilidade de criarmos funções anônimas, ou seja, fun�
 # Essa função será útil em apenas 1 lugar, não sendo necessária no resto da aplicação
 
 from random import randint
-from typing import Dict
 
 if __name__ == "__main__":
     
