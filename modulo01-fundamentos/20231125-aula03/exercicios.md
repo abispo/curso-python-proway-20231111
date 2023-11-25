@@ -2,7 +2,6 @@ sintaxe básica
 comando return
 parametros e argumentos
     obrigatórios e opcionais
-valores de retorno
 parametros arbitrarios
     args e kwargs
 funcoes recursivas
