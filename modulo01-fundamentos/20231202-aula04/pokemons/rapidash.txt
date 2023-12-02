@@ -1,0 +1,6 @@
+ID: 78
+Altura: 1.7000000000000002m
+Habilidades:
+run-away flash-fire flame-body **********
+Tipos:
+fire 

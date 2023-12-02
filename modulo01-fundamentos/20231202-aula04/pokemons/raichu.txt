@@ -1,0 +1,7 @@
+ID: 26
+Altura: 0.8m
+Habilidades:
+static lightning-rod 
+**********
+Tipos:
+electric Última atualização: 02/12/2023 16:16:51

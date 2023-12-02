@@ -39,11 +39,14 @@ if __name__ == "__main__":
                         arquivo.write(f"ID: {dados_pokemon.get('id')}\n")
                         arquivo.write(f"Altura: {dados_pokemon.get('height') * 0.1}m\n")
                         arquivo.write("Habilidades:\n")
-                        for habilidade in dados_pokemon.get("habilities"):
+                        for habilidade in dados_pokemon.get("abilities"):
                             arquivo.write(f"{habilidade.get('ability').get('name')} ")
 
-                        arquivo.write('**********\n')
+                        arquivo.write('\n**********\n')
 
                         arquivo.write("Tipos:\n")
                         for tipo in dados_pokemon.get("types"):
                             arquivo.write(f"{tipo.get('type').get('name')} ")
+
+                        # Aqui formatamos a data para dd/mm/yyyy hh:mm:ss
+                        arquivo.write(f"\nÚltima atualização: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}")
