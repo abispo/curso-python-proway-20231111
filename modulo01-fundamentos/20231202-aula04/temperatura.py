@@ -23,4 +23,5 @@ from datetime import datetime
 
 import requests
 
-# https://goweather.herokuapp.com/weather/blumenau
+if __name__ == "__main__":
+    pass
