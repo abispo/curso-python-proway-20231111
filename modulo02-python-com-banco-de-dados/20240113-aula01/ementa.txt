@@ -1,0 +1,31 @@
+Python com Banco de Dados
+
+1. Acesso a banco de dados com Python utilizando a biblioteca sqlite3 (conector)
+    1.1. Montando os comandos SQL e utilizando o python para executá-los.
+
+2. Normalização em Banco de Dados.
+    2.1 Estudo das Formas Normais
+        2.1.1 Primeira Forma Normal (1FN)
+        2.1.2 Segunda Forma Normal (2FN)
+        2.1.3 Terceira Forma Normal (3FN)
+
+3. Graus de Relacionamento entre as tabelas
+    1. Um Para Um (1:1)
+    2. Um para Muitos (1:N)
+    3. Muitos para Muitos (N:N)
+
+4. Orientação a Objetos em Python
+    1. Pilares da POO
+        1.1 Encapsulamento
+        1.2 Herança
+        1.3 Polimorfismo
+        1.4 Composição
+        1.5 Abstração
+
+5. Acesso a bancos de dados em Python utilizando um ORM (SQLAlchemy)
+    1. O que é um ORM
+    2. Configurando
+    3. etc...
+
+6. Trabalhando com migrations em banco de dados
+    1. Utilizando Alembic
