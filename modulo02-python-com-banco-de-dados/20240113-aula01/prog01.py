@@ -27,6 +27,10 @@ conexao = sqlite3.connect(connection_string)
 cursor = conexao.cursor()
 
 if __name__ == "__main__":
+
+    # "Resetando" o banco de dados
+    comando = "DROP TABLE IF EXISTS tb_estados"
+    cursor.execute(comando)
     
     comando = """
 
@@ -81,6 +85,36 @@ if __name__ == "__main__":
             nome, uf
         )
 
+        # Passar o comando para o cursor executá-lo
         cursor.execute(comando)
 
+        # "Confirmar" a transação no banco chamando o método commit() da conexão
         conexao.commit()
+
+        print(f"O estado '{nome}' foi salvo com o id {cursor.lastrowid}.")
+
+    # Para trazer dados de consultas, podemos utilizar 3 métodos
+    
+    comando = "SELECT * FROM tb_estados;"
+    resultado = cursor.execute(comando)
+
+    # fetchone(): Trás apenas o primeiro resultado da consulta. Se a consulta não trouxe resultados, retorna None
+    print(f"Resultado com fetchone(): {resultado.fetchone()}.")
+
+    # fetchmany(quantidade): Trás um número de registros igual ao valor de quantidade. Se a consulta não trouxe resultados, retorna uma lista vazia.
+    print(f"Resultado com fetchmany(): {resultado.fetchmany(10)}.")
+
+    # fetchall(): Trás todos os registros da consulta. Se a consulta não trouxe resultados, retorna uma lista vazia.
+    print(f"Resultado com fetchall(): {resultado.fetchall()}.")
+
+    print("*** ATUALIZAR REGISTRO ***")
+    comando = "UPDATE tb_estados SET nome = 'DEUTSCH' WHERE uf = 'SC';"
+    cursor.execute(comando)
+    print(f"Linhas afetadas: {cursor.rowcount}")
+
+    print("*** APAGAR REGISTRO ***")
+    comando = "DELETE FROM tb_estados WHERE uf = 'SP' OR uf = 'RJ';"
+    cursor.execute(comando)
+    print(f"Linhas afetadas: {cursor.rowcount}")
+
+    conexao.commit()
