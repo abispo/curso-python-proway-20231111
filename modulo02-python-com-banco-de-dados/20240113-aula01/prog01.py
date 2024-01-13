@@ -118,3 +118,8 @@ if __name__ == "__main__":
     print(f"Linhas afetadas: {cursor.rowcount}")
 
     conexao.commit()
+
+    # É importante sempre fechar a conexão com o banco de dados
+
+    cursor.close()
+    conexao.close()
