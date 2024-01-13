@@ -13,10 +13,14 @@ carga_horaria   INT     NOT NULL
 preco           REAL    NOT NULL
 ```
 
-Após os dados terem sido salvos, vamos salvar um novo arquivo chamado `estatisticas_cursos.txt`, que terá o formato a seguir:
+Após os dados terem sido salvos, vamos salvar uma nova tabela chamada `tb_estatisticas_cursos`, que terá as seguintes colunas:
 
 ```
-Estatísticas dos cursos
+qtd_cursos      INTEGER
+curso_maior_carga_horaria: TEXT
+curso_com_maior_valor: TEXT
+
+Após salvar, mostrar esses dados na tela. Exemplo:
 
 Quantidade de cursos: 10
 Curso com a maior carga horária: Web Development com Django (50 horas)
