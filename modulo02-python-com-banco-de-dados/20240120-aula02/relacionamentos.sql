@@ -94,3 +94,61 @@ ON tu.id = tpo.usuario_id
 WHERE tpo.usuario_id = 1;
 
 -- ///// --
+
+/*
+Para cada postagem, o usuário poderá associar categorias(ou hashtags). Por exemplo: A postagem 'Python é legal'
+pode ter associada as categorias 'Python', '2024', 'programação', etc. Para isso, vamos primeiro criar a tabela
+tb_categorias
+*/
+
+CREATE TABLE IF NOT EXISTS tb_categorias(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	nome VARCHAR(200) NOT NULL
+);
+
+# A regra é: Uma postagem pode ter diversas categorias, e uma categoria pode aparecer em diversas postagens.
+
+# Inserir algumas categorias
+INSERT INTO tb_categorias (nome) VALUES
+	("2024"),
+	("programação"),
+	("python"),
+	("java"),
+	("sql"),
+	("banco-de-dados"),
+	("devops");
+SELECT * FROM tb_categorias ;
+
+# Criar a tabela associativa que irá associar os dados de postagem e de categoria
+CREATE TABLE IF NOT EXISTS tb_postagens_categorias(
+	postagem_id INT NOT NULL,
+	categoria_id INT NOT NULL,
+	PRIMARY KEY (postagem_id, categoria_id),
+	FOREIGN KEY (postagem_id) REFERENCES tb_postagens(id),
+	FOREIGN KEY (categoria_id) REFERENCES tb_categorias(id)
+);
+
+# Associar algumas categorias às postagens
+INSERT INTO tb_postagens_categorias (postagem_id, categoria_id) VALUES
+	(1, 1),
+	(1, 2),
+	(1, 3),
+	(2, 2),
+	(2, 4),
+	(2, 5);
+SELECT * FROM tb_postagens_categorias ;
+
+# Buscando as categorias que estão associadas a determinada postagem
+SELECT tp.titulo, tc.nome FROM tb_postagens tp
+INNER JOIN tb_postagens_categorias tpc
+ON tp.id = tpc.postagem_id
+INNER JOIN tb_categorias tc
+ON tc.id = tpc.categoria_id
+WHERE tp.id = 1;
+
+/*
+Para ser possível relacionar as tabelas tb_postagens e tb_categorias seguindo a regra, foi necessário criar a
+tabela tb_postagens_categorias, que servirá como tabela associativa da relação N:N. Como o próprio nome diz, essa
+tabela fará a associação dos dados das tabelas tb_postagens e tb_categorias. Em uma relação N:N, sempre
+existirá uma tabela associativa.
+*/
