@@ -1,0 +1,2 @@
+# Acesso a Banco de Dados em Python utilizando o SQLAlchemy
+SQLAlchemy é um ORM (Object Relational Mapper/Mapeador Objeto Relacional). Basicamente, o usamos para trabalhar com banco de dados utilizando orientação a objetos
