@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Date, ForeignKey, Text, Table
+from sqlalchemy.orm import relationship
 
 from config import Base
 
@@ -34,6 +35,8 @@ class Usuario(Base):
     email = Column(String(200), nullable=False)
     senha = Column(String(200), nullable=False)
 
+    perfil = relationship("Perfil", back_populates="usuario", uselist=False)
+
 
 class Perfil(Base):
 
@@ -42,6 +45,8 @@ class Perfil(Base):
     id = Column(Integer, ForeignKey("tb_usuarios.id"), primary_key=True)
     nome = Column(String(200), nullable=False)
     data_nascimento = Column(Date, nullable=True)
+
+    usuario = relationship("Usuario", back_populates="perfil", uselist=False)
 
 
 class Postagem(Base):
