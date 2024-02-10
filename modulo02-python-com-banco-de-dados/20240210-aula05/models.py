@@ -36,6 +36,7 @@ class Usuario(Base):
     senha = Column(String(200), nullable=False)
 
     perfil = relationship("Perfil", back_populates="usuario", uselist=False)
+    postagens = relationship("Postagem", back_populates="usuario")
 
 
 class Perfil(Base):
@@ -58,6 +59,9 @@ class Postagem(Base):
     titulo = Column(String(200), nullable=False)
     corpo = Column(Text, nullable=False)
 
+    usuario = relationship("Usuario", back_populates="postagens", uselist=False)
+    categorias = relationship("Categoria", secondary=postagens_categorias, back_populates="postagens")
+
 
 class Categoria(Base):
 
@@ -66,3 +70,4 @@ class Categoria(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     nome = Column(String(200), nullable=False)
 
+    postagens = relationship("Postagem", secondary=postagens_categorias, back_populates="categorias")
