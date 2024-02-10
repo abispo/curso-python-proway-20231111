@@ -1,4 +1,10 @@
-from sqlalchemy import Column, Integer, String, Date, ForeignKey, Text, Table, DateTime, func
+from sqlalchemy import (
+    Column, Integer, String,
+    Date, ForeignKey, Text,
+    Table, DateTime, Float,
+    func
+)
+
 from sqlalchemy.orm import relationship
 
 from config import Base
@@ -73,3 +79,46 @@ class Categoria(Base):
     nome = Column(String(200), nullable=False)
 
     postagens = relationship("Postagem", secondary=postagens_categorias, back_populates="categorias")
+
+
+# Models da aula 2 1fn
+class Cliente(Base):
+
+    __tablename__ = "tb_clientes"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    nome = Column(String(300), nullable=False)
+    tipo_logradouro = Column(String(20), nullable=False)
+    logradouro = Column(String(200), nullable=False)
+    numero = Column(String(10), nullable=False)
+    bairro = Column(String(100), nullable=False)
+    cidade = Column(String(100), nullable=False)
+    uf = Column(String(2), nullable=False)
+
+
+class Telefone(Base):
+
+    __tablename__ = "tb_telefones"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    cliente_id = Column(Integer, ForeignKey("tb_clientes.id"), nullable=False)
+    telefone = Column(String(30), nullable=False)
+
+
+# Models da aula 2 2fn
+class Servico(Base):
+
+    __tablename__ = "tb_servicos"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    nome = Column(String(200), nullable=False)
+    valor_hora = Column(Float, nullable=False)
+
+
+class Controle(Base):
+
+    __tablename__ = "tb_controle"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    servico_id = Column(Integer, ForeignKey("tb_servicos.id"), nullable=False)
+    total_horas = Column(Integer, nullable=False)
