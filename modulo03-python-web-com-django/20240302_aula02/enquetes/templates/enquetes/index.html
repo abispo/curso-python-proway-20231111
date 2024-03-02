@@ -1,0 +1,13 @@
+
+{% comment %} perguntas é a variável de contexto passada na função render do arquivo views.py {% endcomment %}
+{% if perguntas %}
+{% comment %}Quando precisamos utilizar um comando (if, for, etc), utilizamos chaves e porcentagem{% endcomment %}
+    <ul>
+        {% for pergunta in perguntas %}
+            {% comment "" %}Quando queremos mostrar o valor de uma variável, utilizamos chaves duplas{% endcomment %}
+            <li><a href="{% url 'enquetes:detalhe' pergunta.id %}">{{ pergunta.texto }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <h2>Não foram encontradas perguntas cadastradas.</h2>
+{% endif %}
