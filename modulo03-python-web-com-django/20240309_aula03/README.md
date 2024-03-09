@@ -2,15 +2,12 @@
 
 ## Desafio
 
-### Criar uma página de estatísticas do site
+### Na página de resultados, criar uma estrutura de feedback de perguntas
 
-Na página principal do pacote `enquetes`, haverá um link para a página principal do pacote `estatísticas`, onde mostraremos as seguintes estatísticas sobre as perguntas e opções:
+Quando o usuário vota, ele é redirecionado para a página de resultados. Nessa página é exibida uma lista com as opções da pergunta, e quantos votos cada uma obteve. Após essa listagem, deverá ser criado um formulário que irá receber as seguintes informações:
+* Nota de 1 a 5 (padrão 3), que o usuário irá atribuir à enquete.
+* Um comentário opcional que ele poderá fazer.
 
-* Quantas perguntas estão cadastradas
-* Quantas opções estão cadastradas
-* Uma lista de perguntas ordenada pela quantidade de votos que recebeu (mais para menos)
-* A média de opções que as perguntas têm
+O usuário irá enviar esses dados após clicar em um botão "Enviar". Essa informação ficará salva no banco de dados. Após clicar em enviar, o usuário volta para a página principal de enquetes
 
-Dica: Para as 2 últimas estatísticas, utilize o método `annotate` para agregar as informações. A documentação está no link a seguir: https://docs.djangoproject.com/en/5.0/topics/db/aggregation/
-
-Dica 2: Utilizem o ChatGPT como guia.
+[Diferencial] O usuário não poderá dar mais de 1 nota para a mesma pergunta. Para ter esse controle, você pode criar os usuário no painel administrativo do Django.
