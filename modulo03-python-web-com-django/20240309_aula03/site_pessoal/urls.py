@@ -24,5 +24,6 @@ urlpatterns = [
 
     path("__debug__/", include("debug_toolbar.urls")),
 
-    path('enquetes/', include('enquetes.urls'))
+    path('enquetes/', include('enquetes.urls')),
+    path('estatisticas/', include('estatisticas.urls')),
 ]

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+    <h1>Estatísticas</h1>
+
+    <h4>Quantidade de perguntas cadastradas: {{ quantidade_perguntas_cadastradas|default:"Sem informação" }}</h4>
+    <h4>Quantidade de opções cadastradas: {{ quantidade_opcoes_cadastradas|default:"Sem informação" }}</h4>
+    <h4>Lista com as 10 perguntas com mais votos: </h4>
+    <ul>
+        {% for pergunta in lista_perguntas_ordenada_quantidade_votos %}
+            <li>{{ pergunta }} - {{ pergunta.num_votos }} voto{{ pergunta.num_votos|pluralize }}</li>
+        {% endfor %}
+    </ul>
+    <h4>Quantidade média de opções por pergunta: {{ media_opcoes_por_pergunta|default:"Sem informação"|floatformat }}</h4>
+
+    <hr>
+    <a href="{% url "enquetes:index" %}">Voltar para as enquetes</a>
+{% endblock conteudo %}
