@@ -11,4 +11,43 @@
     </ul>
 
     <a href="{% url 'enquetes:detalhe' pergunta.id %}">Votar novamente</a>
+    <br><br><hr>
+
+    <h2>Avalie essa enquete</h2>
+
+    {% if user.is_authenticated %}
+        {% if ja_avaliou %}
+            <p>Você já avaliou essa pergunta</p>
+        {% else %}
+        <form action="#" method="post">
+            {% csrf_token %}
+            <select name="nota_pergunta" id="nota_pergunta">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5" selected>5</option>
+            </select>
+            <label for="nota_pergunta">Escolha a nota</label>
+            <br><br>
+            <label for="comentario_pergunta">Escreva um comentário (opcional)</label><br>
+            <textarea name="comentario_pergunta" id="comentario_pergunta" cols="50" rows="5"></textarea><br>
+            <input type="submit" value="Enviar">
+        </form>
+        <hr>
+        {% endif %}
+    {% else %}
+        <p>Você precisa estar autenticado para avaliar a enquete.</p>
+    {% endif %}
+
+    <h2>Comentários dessa enquete</h2>
+    <ul>
+        {% for opiniao_pergunta in pergunta.opiniaopergunta_set.all %}
+            <li>
+                {{ opiniao_pergunta.comentario|default:"<i>Comentário vazio </i>" }}.
+                ({{ opiniao_pergunta.nota }})
+                -- {{ opiniao_pergunta.usuario.username|default:"<i>Anônimo</i>" }}
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock conteudo %}
