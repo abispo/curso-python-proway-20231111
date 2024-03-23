@@ -17,6 +17,11 @@ def pre_registro(request: HttpRequest):
         )
     
     elif request.method == "POST":
+        # Implementar as seguintes validações antes de salvar o registro
+        # 1. Verificar se o e-mail do usuário já não está salvo na tabela de usuários (auth_user)
+        # 2. Verificar se o e-mail informado já não está salvo na tabela de pre registro
+        # 3. Verificar se o pre registro ainda é válido
+        # 4. Verificar se o pre registro não está expirado
 
         form = PreRegistroForm(request.POST)
 
