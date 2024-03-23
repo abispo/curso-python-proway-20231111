@@ -144,3 +144,5 @@ INTERNAL_IPS = [
 
 LOGIN_REDIRECT_URL = '/gestao/'
 LOGOUT_REDIRECT_URL = '/gestao/'
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
