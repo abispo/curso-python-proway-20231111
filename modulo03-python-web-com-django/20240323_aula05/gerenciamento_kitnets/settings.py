@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'gestao.apps.GestaoConfig',
+    'registro.apps.RegistroConfig',
 
     'debug_toolbar',
 ]
