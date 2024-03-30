@@ -5,6 +5,7 @@ from django.urls import reverse
 
 from registro.forms import PreRegistroForm
 from registro.models import PreRegistro
+from registro.utils import enviar_email
 
 def pre_registro(request: HttpRequest):
 
@@ -49,7 +50,17 @@ def pre_registro(request: HttpRequest):
                 )
 
             pre_registro = PreRegistro(email=email)
-
             pre_registro.save()
 
+            enviar_email(request, pre_registro)
+
+            return redirect("registro:envio_email_pre_registro")
+
         return redirect(reverse("registro:pre_registro"))
+    
+
+    def envio_email_pre_registro(request):
+        return render(
+            request,
+            "registro/envio_email_pre_registro.html"
+        )
