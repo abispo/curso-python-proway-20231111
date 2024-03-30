@@ -19,10 +19,6 @@ def pre_registro(request: HttpRequest):
         )
 
     elif request.method == "POST":
-        # Verificação no cadastro
-        # 1. Verificar se o pre registro ainda é válido
-        # 2. Verificar se o pre registro não está expirado
-
         form = PreRegistroForm(request.POST)
 
         if form.is_valid():
@@ -65,8 +61,26 @@ def envio_email_pre_registro(request):
         "registro/envio_email_pre_registro.html"
     )
 
-def registro(request):
-    return render(
-        request,
-        "registro/registro.html"
-    )
+def registro(request: HttpRequest):
+
+    if request.method == "GET":
+        # Verificação no cadastro
+        # 1. Verificar se o pre registro ainda é válido
+            # 1.1 O código foi encontrado e a coluna valido é True
+        # 2. Verificar se o pre registro não está expirado
+            # 2.2 O usuário deve confirmar o seu pré-registro em no máximo 24h. Quando o usuário acessar essa rota, será feito um cálculo de quanto tempo se passou. Se esse tempo for igual ou maior a 24h, o pré-registro é inválido
+
+        pre_registro = PreRegistro.objects.filter(
+            token=request.GET.get("id")
+        ).first()
+        
+        return render(
+            request,
+            "registro/registro.html",
+            {"pre_registro": pre_registro}
+        )
+    elif request.method == "POST":
+        return render(
+            request,
+            "registro/registro.html"
+        )
