@@ -59,8 +59,14 @@ def pre_registro(request: HttpRequest):
         return redirect(reverse("registro:pre_registro"))
     
 
-    def envio_email_pre_registro(request):
-        return render(
-            request,
-            "registro/envio_email_pre_registro.html"
-        )
+def envio_email_pre_registro(request):
+    return render(
+        request,
+        "registro/envio_email_pre_registro.html"
+    )
+
+def registro(request):
+    return render(
+        request,
+        "registro/registro.html"
+    )

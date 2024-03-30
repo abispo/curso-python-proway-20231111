@@ -1,5 +1,6 @@
 from django.core.mail import send_mail
 from django.http.request import HttpRequest
+from django.urls import reverse
 
 from registro.models import PreRegistro
 
@@ -9,7 +10,7 @@ Você recebeu esse e-mail pois você ou alguém o cadastrou no sistema de gestã
 Caso queira confirmar o cadastro, clique no link abaixo.
 Caso não tenha sido você que realizou o pré-registro, apenas ignore esse e-mail.
 
-{'https://' if request.is_secure() else 'http://'}{request.get_host()}/registro/confirmacao-pre-registro?id={pre_registro.token}
+{'https://' if request.is_secure() else 'http://'}{request.get_host()}{reverse("registro:registro")}?id={pre_registro.token}
 """
     
     send_mail(
