@@ -6,5 +6,56 @@
             <h3>Confirmação de cadastro</h3>
         </div>
     </div>
-    
+
+    <hr>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="row justify-content-center">
+            <div class="col-3">
+                <div class="form-floating">
+                    <input type="text" name="nome" id="nome" class="form-control" placeholder="Nome" required>
+                    <label for="nome">Nome</label>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-floating">
+                    <input type="text" name="sobrenome" id="sobrenome" class="form-control" placeholder="Sobrenome" required>
+                    <label for="sobrenome">Sobrenome</label>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-2">
+            <div class="col-6">
+                <div class="form-floating">
+                    <input type="text" name="nome_de_usuario" id="nome_de_usuario" class="form-control" placeholder="Nome de Usuário" required>
+                    <label for="nome_de_usuario">Nome de Usuário</label>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-2">
+            <div class="col-3">
+                <div class="form-floating">
+                    <input type="password" name="senha" id="senha" class="form-control" placeholder="Senha" required>
+                    <label for="senha">Senha</label>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-floating">
+                    <input type="password" name="confirmacao_senha" id="confirmacao_senha" class="form-control" placeholder="Confirmação Senha" required>
+                    <label for="confirmacao_senha">Confirmação da Senha</label>
+                </div>
+            </div>
+        </div>
+
+        <input type="hidden" name="id_pre_registro" value="">
+        <input type="hidden" name="email" value="">
+
+        <div class="row justify-content-center mt-2">
+            <div class="col-3 d-grid">
+                <button type="submit" class="btn btn-primary">Confirmar</button>
+            </div>
+        </div>
+    </form>
+
 {% endblock conteudo %}
