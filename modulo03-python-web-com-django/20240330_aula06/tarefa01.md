@@ -11,7 +11,7 @@ Construir o formulário de cadastro. Esse formulário deve ter os seguintes camp
 
 Além disso, você vai precisar criar 2 elementos do tipo input type=hidden:
 * ID pre registro
-    (type="hidden", name="id_pre_registro", value=<`valor_vindo_da_url`>)
+    (type="hidden", name="id_pre_registro", value=<`id_vindo_da_url`>)
 * email
     (type="hidden", name="email", value=<`email_do_pre_registro`>)
 
