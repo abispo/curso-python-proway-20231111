@@ -67,6 +67,16 @@ def registro(request: HttpRequest):
         # Verificação no cadastro
         # 1. Verificar se o pre registro ainda é válido
             # 1.1 O código foi encontrado e a coluna valido é True
+
+        token = request.GET.get("id")
+
+        pre_registro_valido = PreRegistro.objects.filter(
+            token=token, valido=True
+        ).first()
+
+        if not pre_registro_valido:
+            return redirect(reverse("registro:pre_registro_invalido"))
+
         # 2. Verificar se o pre registro não está expirado
             # 2.2 O usuário deve confirmar o seu pré-registro em no máximo 24h. Quando o usuário acessar essa rota, será feito um cálculo de quanto tempo se passou. Se esse tempo for igual ou maior a 24h, o pré-registro é inválido. Dica: Compare a quantidade de segundos que se passaram
 
@@ -86,3 +96,9 @@ def registro(request: HttpRequest):
             request,
             "registro/registro.html"
         )
+    
+def pre_registro_invalido(request: HttpRequest):
+    return render(
+        request,
+        "registro/pre_registro_invalido.html"
+    )
