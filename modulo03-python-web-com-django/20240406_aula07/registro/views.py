@@ -9,6 +9,11 @@ from django.utils import timezone
 from registro.forms import PreRegistroForm
 from registro.models import PreRegistro
 from registro.utils import enviar_email
+from registro.validadores import (
+    senhas_sao_iguais,
+    todos_dados_preenchidos,
+    username_nao_existe
+)
 
 def pre_registro(request: HttpRequest):
 
@@ -98,11 +103,31 @@ def registro(request: HttpRequest):
             )
         elif request.method == "POST":
 
-            # Implementar as validações
-            return render(
-                request,
-                "registro/registro.html"
-            )
+            nome = request.POST.get("nome")
+            sobrenome = request.POST.get("sobrenome")
+            nome_de_usuario = request.POST.get("nome_de_usuario")
+            senha = request.POST.get("senha")
+            confirmacao_senha = request.POST.get("confirmacao_senha")
+
+            erros = []
+
+            if not todos_dados_preenchidos(
+                nome, sobrenome, nome_de_usuario, senha, confirmacao_senha
+            ):
+                erros.append("Você deve preencher todos os campos no formulário.")
+
+            if not username_nao_existe(nome_de_usuario):
+                erros.append(f"O nome de usuário '{nome_de_usuario}' já existe! Escolha outro.")
+
+            if not senhas_sao_iguais(senha, confirmacao_senha):
+                erros.append("O valor do campo 'Senha' é diferente do valor do campo 'Confirmação da Senha.")
+
+            if erros:
+                return render(
+                    request,
+                    "registro/registro.html",
+                    {"erros": erros}
+                )
 
     except ValidationError:
         return redirect(reverse("registro:pre_registro_invalido"))
