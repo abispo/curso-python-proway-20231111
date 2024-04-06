@@ -1,7 +1,10 @@
+from django.conf import settings
 from django.contrib.auth.models import User
+from django.forms import ValidationError
 from django.http import HttpRequest
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.utils import timezone
 
 from registro.forms import PreRegistroForm
 from registro.models import PreRegistro
@@ -63,42 +66,53 @@ def envio_email_pre_registro(request):
 
 def registro(request: HttpRequest):
 
-    if request.method == "GET":
-        # Verificação no cadastro
-        # 1. Verificar se o pre registro ainda é válido
-            # 1.1 O código foi encontrado e a coluna valido é True
+    try:
+        if request.method == "GET":
+            # Verificação no cadastro
+            # 1. Verificar se o pre registro ainda é válido
+                # 1.1 O código foi encontrado e a coluna valido é True
 
-        token = request.GET.get("id")
+            token = request.GET.get("id")
 
-        pre_registro_valido = PreRegistro.objects.filter(
-            token=token, valido=True
-        ).first()
+            pre_registro_valido = PreRegistro.objects.filter(
+                token=token, valido=True
+            ).first()
 
-        if not pre_registro_valido:
-            return redirect(reverse("registro:pre_registro_invalido"))
+            if not pre_registro_valido:
+                return redirect(reverse("registro:pre_registro_invalido"))
+            
+            data_pre_registro = pre_registro_valido.criado_em
 
-        # 2. Verificar se o pre registro não está expirado
-            # 2.2 O usuário deve confirmar o seu pré-registro em no máximo 24h. Quando o usuário acessar essa rota, será feito um cálculo de quanto tempo se passou. Se esse tempo for igual ou maior a 24h, o pré-registro é inválido. Dica: Compare a quantidade de segundos que se passaram
+            pre_registro_expirado = (timezone.now() - data_pre_registro).total_seconds() > settings.TEMPO_LIMITE_PRE_REGISTRO
 
-        mensagem_erro = None
+            if pre_registro_expirado:
+                pre_registro_valido.valido = False
+                pre_registro_valido.save()
 
-        pre_registro = PreRegistro.objects.filter(
-            token=request.GET.get("id")
-        ).first()
-        
-        return render(
-            request,
-            "registro/registro.html",
-            {"pre_registro": pre_registro}
-        )
-    elif request.method == "POST":
-        return render(
-            request,
-            "registro/registro.html"
-        )
+                return redirect(reverse("registro:pre_registro_expirado"))
+            
+            return render(
+                request,
+                "registro/registro.html",
+                {"pre_registro": pre_registro_valido}
+            )
+        elif request.method == "POST":
+            return render(
+                request,
+                "registro/registro.html"
+            )
+
+    except ValidationError:
+        return redirect(reverse("registro:pre_registro_invalido"))
     
 def pre_registro_invalido(request: HttpRequest):
     return render(
         request,
         "registro/pre_registro_invalido.html"
+    )
+
+def pre_registro_expirado(request: HttpRequest):
+    return render(
+        request,
+        "registro/pre_registro_expirado.html"
     )

@@ -147,3 +147,5 @@ LOGIN_REDIRECT_URL = '/gestao/'
 LOGOUT_REDIRECT_URL = '/gestao/'
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+TEMPO_LIMITE_PRE_REGISTRO = 86400
