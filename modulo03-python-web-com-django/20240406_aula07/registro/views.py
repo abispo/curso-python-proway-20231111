@@ -97,6 +97,8 @@ def registro(request: HttpRequest):
                 {"pre_registro": pre_registro_valido}
             )
         elif request.method == "POST":
+
+            # Implementar as validações
             return render(
                 request,
                 "registro/registro.html"

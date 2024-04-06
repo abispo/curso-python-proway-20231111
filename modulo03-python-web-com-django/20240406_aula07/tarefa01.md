@@ -1,18 +1,16 @@
 ## Tarefa 1
 
-Construir o formulário de cadastro. Esse formulário deve ter os seguintes campos:
+Implementar o cadastro do usuário. Para salvar o usuário na tabela de usuários (`auth_user`), precisamos fazer algumas validações, que serão as seguintes:
 
-* Nome  (type=text, name=nome)
-* Sobrenome (type=text, name=sobrenome)
-* Nome de usuário (type=text, name=nome_de_usuario)
-* Senha (type=password, name=senha)
-* Confirmação de senha (type=password, name=confirmacao_senha)
-* botão de envio (button type=submit)
+* Verificar se todos os dados do formulário de cadastro foram preenchidos.
+    * Precisamos validar se as informações de cadastro (`nome`, `sobrenome`, `nome_de_usuario`, `senha` e `confirmacao_senha` foram preenchidos). Você pode validar campo a campo ou utilizar a função `built-in` do python `all`.
+    * Precisamos validar também se o `nome_de_usuario` já não existe na tabela `auth_user`.
+    * Por fim, precisamos validar se o valor de `senha` é igual ao valor de `confirmacao_senha`.
 
-Além disso, você vai precisar criar 2 elementos do tipo input type=hidden:
-* ID pre registro
-    (type="hidden", name="id_pre_registro", value=<`id_vindo_da_url`>)
-* email
-    (type="hidden", name="email", value=<`email_do_pre_registro`>)
+Se quiser, você pode criar um módulo apenas para essas funções de validação.
 
-Dica: Todas as informações de requisição, estão no parâmetro `request`, tanto `GET` quanto `POST`
+Se os dados forem validados, será necessário criar um usuário com os dados informados. Utilize o método `User.objects.create_user` para criar um usuário na tabela `auth_user`. Você vai precisar passar os valores recebidos para os parâmetros `first_name`, `last_name`, `username`, `email`, `password`.
+
+Após criar o usuário, você deverá invalidar o pre-registro (coluna `valido` igual a `False`)
+
+Por fim, o usuário será redirecionado para a url `confirmacao-cadastro`, que irá renderizar o template `registro/confirmacao_cadastro.html`. O conteúdo do template será um texto de informação para o usuário, e um link para a página de login.
