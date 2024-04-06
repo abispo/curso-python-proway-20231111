@@ -9,6 +9,8 @@ Implementar o cadastro do usuário. Para salvar o usuário na tabela de usuário
 
 Se quiser, você pode criar um módulo apenas para essas funções de validação.
 
+Caso alguma validação falhe, deve ser exibida no formulário.
+
 Se os dados forem validados, será necessário criar um usuário com os dados informados. Utilize o método `User.objects.create_user` para criar um usuário na tabela `auth_user`. Você vai precisar passar os valores recebidos para os parâmetros `first_name`, `last_name`, `username`, `email`, `password`.
 
 Após criar o usuário, você deverá invalidar o pre-registro (coluna `valido` igual a `False`)
