@@ -109,6 +109,9 @@ def registro(request: HttpRequest):
             senha = request.POST.get("senha")
             confirmacao_senha = request.POST.get("confirmacao_senha")
 
+            id_pre_registro = request.POST.get("id_pre_registro")
+            email = request.POST.get("email")
+
             erros = []
 
             if not todos_dados_preenchidos(
@@ -128,6 +131,20 @@ def registro(request: HttpRequest):
                     "registro/registro.html",
                     {"erros": erros}
                 )
+            
+            User.objects.create_user(
+                first_name=nome,
+                last_name=sobrenome,
+                username=nome_de_usuario,
+                email=email,
+                password=senha
+            )
+
+            pre_registro = PreRegistro.objects.get(token=id_pre_registro)
+            pre_registro.valido = False
+            pre_registro.save()
+
+            return redirect(reverse("registro:confirmacao_cadastro"))
 
     except ValidationError:
         return redirect(reverse("registro:pre_registro_invalido"))
@@ -142,4 +159,10 @@ def pre_registro_expirado(request: HttpRequest):
     return render(
         request,
         "registro/pre_registro_expirado.html"
+    )
+
+def confirmacao_cadastro(request: HttpRequest):
+    return render(
+        request,
+        "registro/confirmacao_cadastro.html"
     )
