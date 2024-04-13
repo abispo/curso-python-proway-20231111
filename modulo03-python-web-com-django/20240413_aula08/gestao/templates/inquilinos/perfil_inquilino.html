@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+    <div class="row">
+        <div class="col text-center">
+            <h3>Perfil de {{ user.first_name }} {{ user.last_name }}</h3>
+        </div>
+    </div>
+
+    <hr>
+
+    {% if erros %}
+        <div class="row mt-2"></div>
+
+        {% for erro in erros %}
+            <div class="row lh-1 d-flex justify-content-center">
+                <div class="col-6 text-center">
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <p>{{ erro }}</p>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+        
+        {% endfor %}
+
+    {% endif %}
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="row justify-content-center">
+            <div class="col-3">
+                <div class="form-floating">
+                    <input
+                        type="text"
+                        name="nome"
+                        id="nome"
+                        class="form-control"
+                        placeholder="Nome"
+                        value="{{ user.first_name }}"
+                        required>
+                    <label for="nome">Nome</label>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-floating">
+                    <input
+                        type="text"
+                        name="sobrenome"
+                        id="sobrenome"
+                        class="form-control"
+                        placeholder="Sobrenome"
+                        value="{{ user.last_name }}"
+                        required>
+                    <label for="sobrenome">Sobrenome</label>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-2">
+            <div class="col-6">
+                <div class="form-floating">
+                    <input
+                        type="text"
+                        name="email"
+                        id="email"
+                        class="form-control"
+                        placeholder="E-mail"
+                        value="{{ user.email }}"
+                        required
+                    >
+                    <label for="email">E-mail</label>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row justify-content-center mt-2">
+            <div class="col-2">
+                <div class="form-floating">
+                    <input
+                        type="text"
+                        name="documento"
+                        id="documento"
+                        class="form-control"
+                        placeholder="Documento"
+                        required
+                    >
+                    <label for="documento">Documento</label>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="form-floating">
+                    <select name="genero" id="genero" class="form-select form-select-sm">
+                        <option selected>Escolha o gênero</option>
+                        <option value="m">Masculino</option>
+                        <option value="f">Feminino</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="form-floating">
+                    <input
+                        type="date"
+                        name="data_de_nascimento"
+                        id="data_de_nascimento"
+                        min="1900-01-01"
+                        max="2003-12-31"
+                        class="form-control"
+                        required
+                    >
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-3">
+            <div class="col-3 d-grid">
+                <button type="submit" class="btn btn-primary">Confirmar</button>
+            </div>
+        </div>
+    </form>
+
+{% endblock conteudo %}
