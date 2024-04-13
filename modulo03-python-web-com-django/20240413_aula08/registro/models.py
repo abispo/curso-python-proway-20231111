@@ -19,9 +19,9 @@ class Perfil(models.Model):
         primary_key=True
     )
 
-    documento = models.CharField(max_length=20)
-    genero = models.CharField(max_length=1)
-    data_de_nascimento = models.DateField()
+    documento = models.CharField(max_length=20, null=True, blank=True)
+    genero = models.CharField(max_length=1, null=True, blank=True)
+    data_de_nascimento = models.DateField(null=True, blank=True)
 
     class Meta:
         db_table = "tb_perfis"

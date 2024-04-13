@@ -93,7 +93,7 @@
                         id="documento"
                         class="form-control"
                         placeholder="Documento"
-                        value="{{ user.perfil.documento }}"
+                        value="{{ user.perfil.documento|default:'' }}"
                         required
                     >
                     <label for="documento">Documento</label>

@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.utils import timezone
 
 from registro.forms import PreRegistroForm
-from registro.models import PreRegistro
+from registro.models import PreRegistro, Perfil
 from registro.utils import enviar_email
 from registro.validadores import (
     senhas_sao_iguais,
@@ -132,13 +132,18 @@ def registro(request: HttpRequest):
                     {"erros": erros}
                 )
             
-            User.objects.create_user(
+            usuario = User.objects.create_user(
                 first_name=nome,
                 last_name=sobrenome,
                 username=nome_de_usuario,
                 email=email,
                 password=senha
             )
+
+            # Utilizamos um signal ao invés de criar manualmente
+            # Perfil.objects.create(
+            #     usuario=usuario
+            # )
 
             pre_registro = PreRegistro.objects.get(token=id_pre_registro)
             pre_registro.valido = False
