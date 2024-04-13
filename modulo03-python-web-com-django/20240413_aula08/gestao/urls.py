@@ -7,8 +7,8 @@ app_name = "gestao"
 urlpatterns = [
     path("", views.index, name="index"),
     path(
-        "inquilinos/<int:id_do_usuario>/perfil/",
-        views.perfil_inquilino,
-        name="perfil_inquilino"
+        "meu-perfil/",
+        views.meu_perfil,
+        name="meu_perfil"
     )
 ]
