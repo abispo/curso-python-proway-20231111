@@ -16,6 +16,7 @@ class Imovel(models.Model):
     bairro = models.CharField(max_length=50)
     cidade = models.CharField(max_length=50)
     estado = models.CharField(max_length=2)
+    descricao = models.TextField(null=True, blank=True)
     disponivel = models.BooleanField(default=True)
     
     class Meta:
