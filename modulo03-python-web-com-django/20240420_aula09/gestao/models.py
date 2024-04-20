@@ -89,7 +89,14 @@ class InformacaoAluguelTipoContratoImovel(models.Model):
         on_delete=models.SET_NULL
     )
     valor = models.FloatField()
-    observacoes = models.TextField()
+    observacoes = models.TextField(blank=True, null=True)
+
+    def __str__(self) -> str:
+        return "Contrato {} para o imóvel '{}'. Valor: R$ {:.2f}".format(
+            self.tipo_contrato.tipo_contrato,
+            self.imovel,
+            self.valor
+        )
 
     class Meta:
         db_table = "informacoes_aluguel_tipo_contrato_imovel"
