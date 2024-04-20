@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+<div class="row">
+    <div class="col text-center alert alert-info" role="alert">
+        <p>Um e-mail foi enviado para a sua caixa postal contendo um links de confirmação de pré-registro. Verifique a sua caixa de SPAM se o e-mail não chegar dentro de poucos minutos. <a href="{% url 'login' %}">Clique aqui</a> para ir à página de login.</p>
+    </div>
+</div>
+{% endblock conteudo %}
