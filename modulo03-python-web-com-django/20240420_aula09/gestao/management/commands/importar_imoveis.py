@@ -39,6 +39,7 @@ class Command(BaseCommand):
                     tipo_logradouro = linha.get("tipo_logradouro")
                     logradouro = linha.get("logradouro")
                     numero = linha.get("numero")
+                    complemento = linha.get("complemento")
                     bairro = linha.get("bairro")
                     cidade = linha.get("cidade")
                     estado = linha.get("estado")
@@ -50,6 +51,7 @@ class Command(BaseCommand):
                         tipo_logradouro=tipo_logradouro,
                         logradouro=logradouro,
                         numero=numero,
+                        complemento=complemento,
                         bairro=bairro,
                         cidade=cidade,
                         estado=estado,
