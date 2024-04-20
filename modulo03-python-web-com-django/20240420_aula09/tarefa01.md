@@ -1,14 +1,22 @@
 ## Tarefa 1
 
-### Criar uma página de perfil do usuário.
-
-O usuário irá entrar na página de perfil, pode poderá visualizar e editar o seu perfil.
-
-Os dados de perfil que serão editáveis serão os seguintes: Nome, Sobrenome, E-mail, Documento, Gênero e Data de Nascimento. (Vamos criar uma model `Perfil` (tb_perfis) que terá as informações de Documento, gênero e Data de Nascimento).
-
-Você pode querer utilizar o elemento [input type="date"](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date) para informar a data de nascimento do usuário.
-
-A rota para a página de perfil do usuário será `/gestao/inquilinos/<id_do_usuario>/perfil`.
-A model `Perfil` [terá um relacionamento 1:1 com a model `User` do pacote `django.contrib.auth.models`](https://docs.djangoproject.com/en/5.0/topics/db/examples/one_to_one/).
-
-Quando um novo usuário for criado, um registro na `tb_perfis` também deve ser criado. Você pode querer utilizar os [Sinais do Django](https://docs.djangoproject.com/en/5.0/ref/signals/).
+### Criar uma página de listagem de imóveis
+* Apenas imóveis que estiverem disponíveis serão listados
+    * Imóvel disponível é um imóvel que:
+        * Não está atualmente alugado
+        * Que não está indisponível por outro motivo
+* Utilize o elemento Card do bootstrap para listar os imóveis
+* Quando o usuário clicar nesse card, ele vai pra página de detalhes do imóvel
+    * Na página de detalhes do imóvel, ele pode visualizar o preço pelo tipo de contrato (diario e o mensal)
+    * O usuário poderá clicar em um botão chamado "Alugar"
+    * Ele será redirecionado para a página de aluguel do imovel
+    * Nessa página, ele irá escolher o tipo de contrato (diario ou mensal), o período de tempo do aluguel (data inicio e data fim).
+    * Após escolher, ele irá confirmar e os dados do contrato serão salvos
+    * As informações sobre parcela, serão salvas em outra tabela, chamada tb_parcelamento. Será criada uma lista de parcelas nessa tabela associada a um contrato.
+* Depois de salvo, na página principal do sistema, irá aparecer o contrato ativo do usuário
+    * Quando o usuário clicar nesse contrato, irá para a página de detalhes do contrato.
+    * Nessa página de detalhes, o usuário poderá visualizar:
+        * Dados do contrato (data de início, data de fim, etc)
+        * Dados do imóvel
+        * Dados das parcelas
+* Utilizar a biblioteca [jquery-mask-plugin](https://igorescobar.github.io/jQuery-Mask-Plugin/docs.html) para formatar corretamente o campo `documento` da página de perfil.
