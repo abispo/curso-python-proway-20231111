@@ -1,3 +1,10 @@
 from django.contrib import admin
 
-# Register your models here.
+from gestao.models import (
+    Imovel, TipoContrato, Contrato, InformacaoAluguelTipoContratoImovel
+)
+
+admin.site.register(Imovel)
+admin.site.register(TipoContrato)
+admin.site.register(Contrato)
+admin.site.register(InformacaoAluguelTipoContratoImovel)

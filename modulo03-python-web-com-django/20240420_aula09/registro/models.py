@@ -23,5 +23,12 @@ class Perfil(models.Model):
     genero = models.CharField(max_length=1, null=True, blank=True)
     data_de_nascimento = models.DateField(null=True, blank=True)
 
+    def __str__(self) -> str:
+        return "{} {} ({})".format(
+            self.usuario.first_name,
+            self.usuario.last_name,
+            self.usuario.email
+        )
+
     class Meta:
         db_table = "tb_perfis"
