@@ -7,10 +7,10 @@ from django.core.management.base import BaseCommand, CommandParser
 
 import requests
 
-from gestao.models import Imovel
+from gestao.models import TipoContrato
 
 class Command(BaseCommand):
-    help = "Importa um arquivo .csv com dados de imóveis"
+    help = "Importa um arquivo .csv com dados de tipos de contrato"
 
     def add_arguments(self, parser: CommandParser) -> None:
         parser.add_argument("arquivo", type=str)
@@ -35,31 +35,15 @@ class Command(BaseCommand):
                 arquivo_csv = csv.DictReader(arquivo, delimiter=';')
 
                 for linha in arquivo_csv:    
-                    id = linha.get("id")
-                    tipo_logradouro = linha.get("tipo_logradouro")
-                    logradouro = linha.get("logradouro")
-                    numero = linha.get("numero")
-                    complemento = linha.get("complemento")
-                    bairro = linha.get("bairro")
-                    cidade = linha.get("cidade")
-                    estado = linha.get("estado")
+                    tipo_contrato = linha.get("tipo_contrato")
                     descricao = linha.get("descricao")
-                    disponivel = bool(int(linha.get("disponivel")))
 
-                    Imovel(
-                        id=id,
-                        tipo_logradouro=tipo_logradouro,
-                        logradouro=logradouro,
-                        numero=numero,
-                        complemento=complemento,
-                        bairro=bairro,
-                        cidade=cidade,
-                        estado=estado,
-                        descricao=descricao,
-                        disponivel=disponivel
+                    TipoContrato(
+                        tipo_contrato=tipo_contrato,
+                        descricao=descricao
                     ).save()
 
-                    self.stdout.write(f"Imovel de id '{id}' salvo com sucesso.")
+                    self.stdout.write(f"Tipo de contrato {tipo_contrato} salvo com sucesso.")
 
         except Exception as exc:
             self.stdout.write(str(exc))

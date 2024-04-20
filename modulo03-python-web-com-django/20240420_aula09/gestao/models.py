@@ -21,3 +21,12 @@ class Imovel(models.Model):
     
     class Meta:
         db_table = "tb_imoveis"
+
+
+class TipoContrato(models.Model):
+
+    tipo_contrato = models.CharField(max_length=20)
+    descricao = models.CharField(max_length=100, null=True, blank=True)
+
+    class Meta:
+        db_table = "tb_tipos_contrato"
