@@ -10,5 +10,10 @@ urlpatterns = [
         "meu-perfil/",
         views.meu_perfil,
         name="meu_perfil"
+    ),
+    path(
+        "nao-autorizado/",
+        views.nao_autorizado,
+        name="nao_autorizado"
     )
 ]

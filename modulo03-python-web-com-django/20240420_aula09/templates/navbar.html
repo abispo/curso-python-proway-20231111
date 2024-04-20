@@ -9,7 +9,7 @@
             <a class="nav-link active" aria-current="page" href="{% url "gestao:index" %}">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url "gestao:meu_perfil" %}">Perfil</a>
+            <a class="nav-link{% if perms.registro.perfil_bloqueado %} disabled{% endif %}" href="{% url "gestao:meu_perfil" %}">Perfil</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Sair</a>

@@ -32,3 +32,6 @@ class Perfil(models.Model):
 
     class Meta:
         db_table = "tb_perfis"
+        permissions = (
+            ("perfil_bloqueado", "Usuário com perfil bloqueado não pode acessar a própria página de perfil"),
+        )

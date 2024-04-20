@@ -1,6 +1,9 @@
 from datetime import datetime
 
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import (
+    login_required,
+    permission_required
+)
 from django.http import HttpRequest
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -15,6 +18,12 @@ def index(request):
 
 @login_required
 def meu_perfil(request: HttpRequest):
+
+    if request.user.has_perm("registro.perfil_bloqueado"):
+        return render(
+            request,
+            "gestao/nao_autorizado.html"
+        )
 
     if request.method == "GET":
 
@@ -57,3 +66,10 @@ def meu_perfil(request: HttpRequest):
         return redirect(
             f"{reverse('gestao:meu_perfil')}?atualizado_com_sucesso=1"
         )
+    
+@login_required
+def nao_autorizado(request: HttpRequest):
+    return render(
+        request,
+        "gestao/nao_autorizado.html"
+    )
