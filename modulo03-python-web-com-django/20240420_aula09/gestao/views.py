@@ -1,7 +1,8 @@
 from datetime import datetime
 
+from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from registro.models import Perfil
@@ -12,6 +13,7 @@ def index(request):
         "gestao/index.html"
     )
 
+@login_required
 def meu_perfil(request: HttpRequest):
 
     if request.method == "GET":
