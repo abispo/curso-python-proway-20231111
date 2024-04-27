@@ -20,5 +20,10 @@ urlpatterns = [
         "alugar-imovel/",
         views.lista_imoveis,
         name="lista_imoveis"
+    ),
+    path(
+        "imoveis/<imovel_id>/",
+        views.detalhe_imovel,
+        name="detalhe_imovel"
     )
 ]

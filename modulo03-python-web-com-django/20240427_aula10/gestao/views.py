@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import (
     permission_required
 )
 from django.http import HttpRequest
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
 from gestao.models import Imovel
@@ -78,12 +78,51 @@ def nao_autorizado(request: HttpRequest):
 @login_required
 def lista_imoveis(request: HttpRequest):
 
-    imoveis = Imovel.objects.filter(disponivel=True)
+    lista_imoveis = Imovel.objects.filter(disponivel=True)
+    imoveis = []
+
+    for imovel in lista_imoveis:
+
+        imovel_id = imovel.id
+        descricao = imovel.descricao
+        preco_diaria = imovel.informacaoalugueltipocontratoimovel_set.filter(tipo_contrato=1).first()
+        preco_mensal = imovel.informacaoalugueltipocontratoimovel_set.filter(tipo_contrato=2).first()
+
+        dados_imovel = {
+            "id": imovel_id,
+            "descricao": descricao,
+            "preco_diaria": None if not preco_diaria else preco_diaria.valor,
+            "preco_mensal": None if not preco_mensal else preco_mensal.valor
+        }
+
+        imoveis.append(dados_imovel)
     
     return render(
         request,
         "gestao/lista_imoveis.html",
         {
             "imoveis": imoveis
+        }
+    )
+
+@login_required
+def detalhe_imovel(request: HttpRequest, imovel_id: str):
+
+    imovel = get_object_or_404(Imovel, pk=imovel_id)
+
+    preco_diaria = imovel.informacaoalugueltipocontratoimovel_set.get(tipo_contrato=1).first()
+    preco_mensal = imovel.informacaoalugueltipocontratoimovel_set.get(tipo_contrato=2).first()
+
+    detalhes_precos = {
+        "preco_diaria": None if not preco_diaria else preco_diaria,
+        "preco_mensal": None if not preco_mensal else preco_mensal
+    }
+
+    return render(
+        request,
+        "gestao/detalhe_imovel.html",
+        {
+            "imovel": imovel,
+            "detalhes_precos": detalhes_precos
         }
     )

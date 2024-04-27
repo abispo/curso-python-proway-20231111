@@ -9,8 +9,18 @@
             <div class="col">
                 <div class="card" style="width: 15rem">
                     <div class="card-body">
-                      <p class="card-text">{{ imovel }}</p>
-                      <a href="#" class="card-link">Ir para os detalhes</a>
+                        {% if imovel.preco_mensal %}
+                            <h5 class="card-title">
+                                Aluguel mensal: R$ {{ imovel.preco_mensal|floatformat:2 }}
+                            </h5>
+                        {% endif %}
+                        {% if imovel.preco_diaria %}
+                            <h6 class="card-subtitle">
+                                Diária: R$ {{ imovel.preco_diaria|floatformat:2 }}
+                            </h6>
+                        {% endif %}
+                      <p class="card-text">{{ imovel.descricao }}</p>
+                      <a href="{% url 'gestao:detalhe_imovel' imovel.id %}" class="card-link">Ir para os detalhes</a>
                     </div>
                   </div>
             </div>
