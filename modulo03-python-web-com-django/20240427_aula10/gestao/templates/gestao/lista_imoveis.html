@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+    <h2 class='text-center'>Alugar Imóvel</h2>
+    <hr>
+
+    <div class="row row-cols-4">
+        {% for imovel in imoveis %}
+            <div class="col">
+                <div class="card" style="width: 15rem">
+                    <div class="card-body">
+                      <p class="card-text">{{ imovel }}</p>
+                      <a href="#" class="card-link">Ir para os detalhes</a>
+                    </div>
+                  </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock conteudo %}

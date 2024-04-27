@@ -15,5 +15,10 @@ urlpatterns = [
         "nao-autorizado/",
         views.nao_autorizado,
         name="nao_autorizado"
+    ),
+    path(
+        "alugar-imovel/",
+        views.lista_imoveis,
+        name="lista_imoveis"
     )
 ]

@@ -8,6 +8,7 @@ from django.http import HttpRequest
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
+from gestao.models import Imovel
 from registro.models import Perfil
 
 def index(request):
@@ -72,4 +73,17 @@ def nao_autorizado(request: HttpRequest):
     return render(
         request,
         "gestao/nao_autorizado.html"
+    )
+
+@login_required
+def lista_imoveis(request: HttpRequest):
+
+    imoveis = Imovel.objects.filter(disponivel=True)
+    
+    return render(
+        request,
+        "gestao/lista_imoveis.html",
+        {
+            "imoveis": imoveis
+        }
     )
