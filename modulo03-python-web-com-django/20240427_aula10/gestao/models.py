@@ -100,3 +100,23 @@ class InformacaoAluguelTipoContratoImovel(models.Model):
 
     class Meta:
         db_table = "informacoes_aluguel_tipo_contrato_imovel"
+
+class Parcelamento(models.Model):
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
+    contrato = models.ForeignKey(
+        Contrato,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    numero_parcela = models.IntegerField()
+    valor_parcela = models.FloatField()
+    data_vencimento = models.DateField()
+    paga = models.BooleanField(default=False)
+    data_pagamento = models.DateField(null=True, blank=True)
+
+    class Meta:
+        db_table = "tb_parcelamentos"

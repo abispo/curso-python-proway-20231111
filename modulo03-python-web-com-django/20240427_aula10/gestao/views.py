@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from django.contrib.auth.decorators import (
     login_required,
@@ -7,8 +7,9 @@ from django.contrib.auth.decorators import (
 from django.http import HttpRequest
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
+from django.utils import timezone
 
-from gestao.models import Imovel
+from gestao.models import Contrato, Imovel, Parcelamento, TipoContrato
 from registro.models import Perfil
 
 def index(request):
@@ -126,12 +127,76 @@ def detalhe_imovel(request: HttpRequest, imovel_id: str):
 @login_required
 def alugar_imovel(request: HttpRequest, imovel_id: str):
 
-    imovel = get_object_or_404(Imovel, pk=imovel_id)
 
     if request.method == "GET":
+        imovel = get_object_or_404(Imovel, pk=imovel_id)
 
         preco_diaria = imovel.informacaoalugueltipocontratoimovel_set.get(tipo_contrato=1)
         preco_mensal = imovel.informacaoalugueltipocontratoimovel_set.get(tipo_contrato=2)
+
+        return render(
+            request,
+            "gestao/alugar_imovel.html",
+            {
+                "imovel": imovel,
+                "preco_diaria": None if not preco_diaria else preco_diaria.valor,
+                "preco_mensal": None if not preco_mensal else preco_mensal.valor
+            }
+        )
+    else:
+        tipo_contrato = get_object_or_404(
+            TipoContrato,
+            pk=int(request.POST.get("tipo_contrato"))
+        )
+        periodo = int(request.POST.get("periodo"))
+
+        imovel = get_object_or_404(Imovel, pk=request.POST.get("imovel_id"))
+
+        data_de_inicio = timezone.now().date()
+
+        if tipo_contrato.id == 1:
+            valor_parcela = imovel.informacaoalugueltipocontratoimovel_set.get(tipo_contrato=1).valor
+            valor_total = periodo * valor_parcela
+            data_de_fim = data_de_inicio + timedelta(days=periodo)
+
+        elif tipo_contrato.id == 2:
+            valor_parcela = imovel.informacaoalugueltipocontratoimovel_set.get(tipo_contrato=2).valor
+            valor_total = periodo * valor_parcela
+            data_de_fim = data_de_inicio + timedelta(days=periodo*30)
+
+        contrato = Contrato(
+            tipo_contrato=tipo_contrato,
+            locatario=request.user.perfil,
+            imovel=imovel,
+            data_de_inicio=data_de_inicio,
+            data_de_fim=data_de_fim,
+            esta_ativo=True,
+            valor_total = valor_total,
+            valor_parcela=valor_parcela
+        ).save()
+
+        imovel.disponivel = False
+        imovel.save()
+
+        if tipo_contrato.id == 1:
+            parcelamento = Parcelamento(
+                numero_parcela=1,
+                valor_parcela=valor_total,
+                data_vencimento=timezone.now().date() + timedelta(days=1),
+                contrato=contrato
+            )
+
+            parcelamento.save()
+
+        elif tipo_contrato.id == 2:
+            for index in range(1, periodo+1):
+                parcelamento = Parcelamento(
+                numero_parcela=index,
+                valor_parcela=valor_parcela,
+                data_vencimento=timezone.now().date() + timedelta(days=index*30),
+                contrato=contrato
+            )
+                parcelamento.save()
 
         return render(
             request,
