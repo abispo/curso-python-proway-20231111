@@ -6,7 +6,45 @@
 
 <div class="row">
     <div class="col text-center">
-        <p>{{ imovel.descricao }}</p>
+        
+        <p>
+            <strong>Descrição: </strong>
+            {{ imovel.descricao }}
+        </p>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            <p>
+                <strong>Endereço: </strong>
+                {{ imovel.tipo_logradouro }} 
+                {{ imovel.logradouro }}, 
+                {{ imovel.numero }}, 
+                {{ imovel.bairro }}, 
+                {{ imovel.cidade }}, 
+                {{ imovel.estado }}.
+            </p>
+        </div>
+    </div>
+    {% if preco_diaria %}
+        <div class="row">
+            <div class="col text-center">
+                <p><strong>Preço do aluguel diário: </strong>R$ {{ preco_diaria|floatformat:2 }}</p>
+            </div>
+        </div>
+    {% endif %}
+    {% if preco_mensal %}
+        <div class="row">
+            <div class="col text-center">
+                <p><strong>Preço do aluguel mensal: </strong>R$ {{ preco_mensal|floatformat:2 }}</p>
+            </div>
+        </div>
+    {% endif %}
+    <div class="row d-flex justify-content-center">
+        <div class="col-4">
+            <div class="d-grid">
+                <a href="{% url 'gestao:alugar_imovel' imovel.id %}" class="btn btn-primary" tabindex="-1" role="button" aria-disabled="true">Alugar</a>
+            </div>
+        </div>
     </div>
 </div>
 
