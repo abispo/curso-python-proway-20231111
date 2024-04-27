@@ -125,7 +125,20 @@ def detalhe_imovel(request: HttpRequest, imovel_id: str):
 
 @login_required
 def alugar_imovel(request: HttpRequest, imovel_id: str):
-    return render(
-        request,
-        "gestao/alugar_imovel.html"
-    )
+
+    imovel = get_object_or_404(Imovel, pk=imovel_id)
+
+    if request.method == "GET":
+
+        preco_diaria = imovel.informacaoalugueltipocontratoimovel_set.get(tipo_contrato=1)
+        preco_mensal = imovel.informacaoalugueltipocontratoimovel_set.get(tipo_contrato=2)
+
+        return render(
+            request,
+            "gestao/alugar_imovel.html",
+            {
+                "imovel": imovel,
+                "preco_diaria": None if not preco_diaria else preco_diaria.valor,
+                "preco_mensal": None if not preco_mensal else preco_mensal.valor
+            }
+        )
