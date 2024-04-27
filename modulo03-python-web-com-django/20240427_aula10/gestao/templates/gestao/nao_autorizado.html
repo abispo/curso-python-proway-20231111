@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+    <div class="row">
+        <div class="col text-center">
+            <p>Você não tem autorização para acessar essa página. Entre em contato com o administrador. <a href="{% url 'gestao:index' %}">Clique aqui</a> para voltar a página principal.</p>
+        </div>
+    </div>
+{% endblock conteudo %}
+
